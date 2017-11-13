@@ -3,3 +3,7 @@
 Homestead.json
 Homestead.yaml
 .env
+build/
+coverage/
+bootstrap/compiled.php
+.vscode/
