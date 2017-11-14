@@ -20,8 +20,9 @@ $router->get('/', function () use ($router) {
  *  Routes for items
  */
 $router->group(['prefix' => 'api'], function ($router) {
-    $router->get('items', 'ItemsController@add');
-    $router->post('items', 'ItemsController@all');
-    $router->put('items/{id}', 'ItemsController@put');
-    $router->delete('items/{id}', 'ItemsController@remove');
+    $router->post('items', 'ItemsController@add');
+    $router->get('items', 'ItemsController@all');
+    $router->get('items/{id}', 'ItemsController@oneItem');
+    $router->put('items/{id}', 'ItemsController@update');
+    $router->delete('items/{id}', 'ItemsController@delete');
 });

@@ -7,3 +7,7 @@ build/
 coverage/
 bootstrap/compiled.php
 .vscode/
+
+composer
+.env.example
+.gitignore
