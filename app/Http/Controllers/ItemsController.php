@@ -35,11 +35,10 @@ class ItemsController extends Controller
      */
     public function oneItem(Request $request, $id)
     {
-        if (!Items::where('id', $id)->exists()) {
-            return response()->json("Item not found");
-        }
         $item = Items::find($id);
-
+        if (!$item) {
+            return response()->json(["error" => "Item not found"], 404);
+        }
         return response()->json($item);
     }
 
@@ -70,10 +69,10 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Items::where('id', $id)->exists()) {
-            return response()->json("Item not found");
-        }
         $item = Items::find($id);
+        if (!$item) {
+            return response()->json(["error" => "Item not found"], 404);
+        }
         $item->name = $request->input('name');
         $item->stock = $request->input('stock');
         $item->price = $request->input('price');
@@ -92,10 +91,11 @@ class ItemsController extends Controller
      */
     public function delete(Request $request, $id)
     {
-        if (!Items::where('id', $id)->exists()) {
-            return response()->json("Item not found");
-        }
         $item = Items::find($id);
+
+        if (!$item) {
+            return response()->json(["error" => "Item not found"], 404);
+        }
         $item->delete();
 
         return response()->json($item);
