@@ -1,0 +1,13 @@
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+.env
+build/
+coverage/
+bootstrap/compiled.php
+.vscode/
+
+composer
+.env.example
+.gitignore
