@@ -12,6 +12,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,5 +30,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'password',
+    ];
+
+    public static $rules = [
+        "user_id" => "required|string",
+        "slack_id" => "string",
+        "email" => "required|string",
+        "password" => "password"
     ];
 }

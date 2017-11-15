@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
- * Items model
+ * Item model
  */
-class Items extends Model
+class Item extends Model
 {
     protected $fillable = [
         'name',

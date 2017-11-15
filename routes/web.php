@@ -20,9 +20,20 @@ $router->get('/', function () use ($router) {
  *  Routes for items
  */
 $router->group(['prefix' => 'api'], function ($router) {
-    $router->post('items', 'ItemsController@add');
-    $router->get('items', 'ItemsController@all');
-    $router->get('items/{id}', 'ItemsController@oneItem');
-    $router->put('items/{id}', 'ItemsController@update');
-    $router->delete('items/{id}', 'ItemsController@delete');
+    $router->post('items', 'ItemController@add');
+    $router->get('items', 'ItemController@all');
+    $router->get('items/{id}', 'ItemController@oneItem');
+    $router->put('items/{id}', 'ItemController@update');
+    $router->delete('items/{id}', 'ItemController@delete');
+});
+
+/**
+ *  Routes for orders
+ */
+$router->group(['prefix' => 'api'], function ($router) {
+    $router->post('orders', 'OrderController@add');
+    $router->put('orders/{id}', 'OrderController@update');
+    $router->delete('orders/{id}', 'OrderController@delete');
+    $router->get('orders', 'OrderController@all');
+    $router->get('orders/{id}', 'OrderController@oneOrder');
 });
