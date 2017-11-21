@@ -20,8 +20,8 @@ class CreateOrderItemsTable extends Migration
             $table->integer('cost');
             $table->integer('order_id');
             $table->integer('item_id');
-            $table->foreign('order_id')->references('id')->on('order');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,5 +34,6 @@ class CreateOrderItemsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('order_items');
+        Schema::disableForeignKeyConstraints();
     }
 }

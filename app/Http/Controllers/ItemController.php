@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Items;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
  *
  * @package App\Http\Controllers
  */
-class ItemsController extends Controller
+class ItemController extends Controller
 {
     /**
      * Get all items
@@ -20,7 +20,7 @@ class ItemsController extends Controller
      */
     public function all()
     {
-        $items = Items::all();
+        $items = Item::all();
 
         return response()->json($items);
     }
@@ -35,7 +35,7 @@ class ItemsController extends Controller
      */
     public function oneItem(Request $request, $id)
     {
-        $item = Items::find($id);
+        $item = Item::find($id);
         if (!$item) {
             return response()->json(["error" => "Item not found"], 404);
         }
@@ -51,10 +51,10 @@ class ItemsController extends Controller
      */
     public function add(Request $request)
     {
-        if (Items::where('name', $request->input('name'))->exists()) {
+        if (Item::where('name', $request->input('name'))->exists()) {
             return response()->json("Item already exists");
         }
-        $item = Items::create($request->all());
+        $item = Item::create($request->all());
 
         return response()->json($item);
     }
@@ -69,7 +69,7 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Items::find($id);
+        $item = Item::find($id);
         if (!$item) {
             return response()->json(["error" => "Item not found"], 404);
         }
@@ -91,7 +91,7 @@ class ItemsController extends Controller
      */
     public function delete(Request $request, $id)
     {
-        $item = Items::find($id);
+        $item = Item::find($id);
 
         if (!$item) {
             return response()->json(["error" => "Item not found"], 404);
