@@ -37,3 +37,7 @@ $router->group(['prefix' => 'api'], function ($router) {
     $router->get('orders', 'OrderController@all');
     $router->get('orders/{id}', 'OrderController@oneOrder');
 });
+
+$router->group(['prefix' => 'api', 'middleware' => 'web'], function ($router) {
+    $router->post('cart', 'CartController@add');
+});

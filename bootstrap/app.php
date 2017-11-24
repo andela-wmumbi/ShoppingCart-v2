@@ -62,14 +62,27 @@ $app->singleton(
 | route or middleware that'll be assigned to some specific routes.
 |
 */
+// Load session config
+$app->configure('session');
 
-// $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\ExampleMiddleware::class,
+    Illuminate\Session\Middleware\StartSession::class,
+]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'web' => Illuminate\Session\Middleware\StartSession::class,
+]);
+
+// Add `SessionServiceProvider`
+$app->register(Illuminate\Session\SessionServiceProvider::class);
+
+// fix `BindingResolutionException` problem
+$app->bind(Illuminate\Session\SessionManager::class, function ($app) {
+    return $app->make('session');
+});
 
 /*
 |--------------------------------------------------------------------------
