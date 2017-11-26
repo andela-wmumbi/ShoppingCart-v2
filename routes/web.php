@@ -41,3 +41,6 @@ $router->group(['prefix' => 'api'], function ($router) {
 $router->group(['prefix' => 'api', 'middleware' => 'web'], function ($router) {
     $router->post('cart', 'CartController@add');
 });
+$router->group(['prefix' => 'api'], function ($router) {
+    $router->post('users', 'UserController@add');
+});
