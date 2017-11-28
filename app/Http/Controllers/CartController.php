@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Cache;
+
 /**
  * Cart Controller
  *
@@ -22,13 +24,17 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
-        $cart = array($request->id => $request->quantity);
-        $data = Redis::set('cart', json_encode($cart));
+        $cart = Session::get('cart');
 
-        // $request->session()->push('cart', $cart);
-        $data = Redis::get('cart');
+        if (isset($cart[$request->id]) ) {
+            return response()->json("Item already in cart");
+        }
+        $cart[$request->id] = $request->quantity;
+        Session::put('cart', $cart);
 
-        return $data;
+        $cart = Session::get('cart');
+
+        return response()->json($cart);
     }
 
     /**
@@ -40,9 +46,10 @@ class CartController extends Controller
 
     public function all(Request $request)
     {
-        $data = Redis::get('cart');
-        return $data;
+        $cart = Session::get('cart');
+        return response()->json($cart);
     }
+
 
      /**
      * Delete all items in cart
@@ -51,9 +58,11 @@ class CartController extends Controller
      * @return object
      */
 
-    public function delete(Request $request)
+    public function delete(Request $request,$id)
     {
-        $data = $request->session()->flush();
-        return response()->json($data);
+       $cart = Session::get('cart');
+    unset($cart[intval($id)]);
+       return response()->json($cart);
+
     }
 }
