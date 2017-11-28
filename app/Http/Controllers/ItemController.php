@@ -35,7 +35,11 @@ class ItemController extends Controller
      */
     public function oneItem(Request $request, $id)
     {
-        $item = Item::find($id);
+        $arr = explode(',', $id);
+        foreach ($arr AS $index => $value)
+        $arr[$index] = (int)$value;
+
+        $item = Item::findMany($arr);
         if (!$item) {
             return response()->json(["error" => "Item not found"], 404);
         }

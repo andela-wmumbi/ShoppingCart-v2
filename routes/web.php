@@ -38,10 +38,10 @@ $router->group(['prefix' => 'api'], function ($router) {
     $router->get('orders/{id}', 'OrderController@oneOrder');
 });
 
-$router->group(['prefix' => 'api'], function ($router) {
+$router->group(['prefix' => 'api', 'middleware' => 'web'], function ($router) {
     $router->post('cart', 'CartController@add');
     $router->get('cart', 'CartController@all');
-    $router->delete('cart', 'CartController@delete');
+    $router->delete('cart/{id}', 'CartController@delete');
 });
 $router->group(['prefix' => 'api'], function ($router) {
     $router->post('users', 'UserController@add');
