@@ -20,8 +20,47 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
-        $request->session()->push($request->id, $request->quantity);
-        $data = $request->session()->all();
-        return $data;
+        $cart = Session::get('cart');
+
+        if (isset($cart[$request->id]) ) {
+            return response()->json("Item already in cart");
+        }
+        $cart[$request->id] = $request->quantity;
+        Session::put('cart', $cart);
+
+        $cart = Session::get('cart');
+
+        $cookie = Array("cookie" => $_COOKIE['laravel_session']);
+
+        return response()->json($cookie);
+    }
+
+    /**
+     * Get all items in cart
+     * @param object $request request
+     *
+     * @return object
+     */
+
+    public function all(Request $request)
+    {
+        $cart = Session::get('cart');
+        return response()->json($cart);
+    }
+
+
+     /**
+     * Delete all items in cart
+     * @param object $request request
+     *
+     * @return object
+     */
+
+    public function delete(Request $request,$id)
+    {
+       $cart = Session::get('cart');
+    unset($cart[intval($id)]);
+       return response()->json($cart);
+
     }
 }

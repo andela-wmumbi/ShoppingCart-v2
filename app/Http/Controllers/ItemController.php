@@ -35,11 +35,19 @@ class ItemController extends Controller
      */
     public function oneItem(Request $request, $id)
     {
-        $item = Item::find($id);
-        if (!$item) {
-            return response()->json(["error" => "Item not found"], 404);
+        try {
+            $arr = explode(',', $id);
+            foreach ($arr AS $index => $value)
+            $arr[$index] = (int)$value;
+
+            $item = Item::findMany($arr);
+            if (!$item) {
+                return response()->json(["error" => "Item not found"], 404);
+            }
+            return response()->json($item);
+        } catch (ModelNotFoundException $exception) {
+            return $this->respond(Response::HTTP_NOT_FOUND, ["message" => "The request was not found"]);
         }
-        return response()->json($item);
     }
 
     /**
